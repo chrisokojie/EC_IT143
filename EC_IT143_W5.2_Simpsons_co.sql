@@ -11,27 +11,27 @@ Purpose: This script answers 4 analytical questions about the Simpsons community
 
 -- Question 1: Which card members have the highest combined expenses?
 -- Author: Christopher Okojie
-SELECT CardMemberName, SUM(Amount) AS TotalExpenses
-FROM Transactions
-GROUP BY CardMemberName
+SELECT Card_Member, SUM(transaction_count) AS TotalExpenses
+FROM CardMember_Spending
+GROUP BY Card_Member
 ORDER BY TotalExpenses DESC;
 
 -- Question 2: Are there any duplicate or overlapping transactions per card?
 -- Author: Christopher Okojie
-SELECT CardNumber, TransactionDate, Amount, COUNT(*) AS DuplicateCount
-FROM Transactions
-GROUP BY CardNumber, TransactionDate, Amount
+SELECT Card_Member, Date, Amount, COUNT(*) AS DuplicateCount
+FROM Planet_Express
+GROUP BY Card_Member, Date, Amount
 HAVING COUNT(*) > 1;
 
 -- Question 3: Which categories of spending are most frequent by dollar value?
 -- Author: Christopher Okojie
-SELECT Category, SUM(Amount) AS TotalSpent
-FROM Transactions
-GROUP BY Category
+SELECT main_category, SUM(transaction_count) AS TotalSpent
+FROM CardMember_Spending
+GROUP BY main_category
 ORDER BY TotalSpent DESC;
 
 -- Question 4: How many family members are employed?
 -- Author: Another student
 SELECT COUNT(*) AS EmployedFamilyMembers
-FROM FamilyMembers
-WHERE EmploymentStatus = 'Employed';
+FROM Family_Data
+WHERE Status = 'Employed';
